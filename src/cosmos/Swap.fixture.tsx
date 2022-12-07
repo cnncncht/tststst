@@ -1,5 +1,9 @@
 import { tokens } from '@uniswap/default-token-list'
 import { TokenInfo } from '@uniswap/token-lists'
+import Row from 'components/Row'
+import { CHAIN_NAMES_TO_IDS } from 'constants/chains'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useValue } from 'react-cosmos/fixture'
 import {
   darkTheme,
   DEFAULT_LOCALE,
@@ -8,11 +12,7 @@ import {
   SUPPORTED_LOCALES,
   SupportedChainId,
   SwapWidget,
-} from '@uniswap/widgets'
-import Row from 'components/Row'
-import { CHAIN_NAMES_TO_IDS } from 'constants/chains'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useValue } from 'react-cosmos/fixture'
+} from 'tststst'
 
 import { DAI, USDC_MAINNET } from '../constants/tokens'
 import EventFeed, { Event, HANDLERS } from './EventFeed'

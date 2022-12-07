@@ -1,8 +1,8 @@
 import { tokens } from '@uniswap/default-token-list'
 import { Currency, TradeType } from '@uniswap/sdk-core'
-import { Field, SupportedChainId, SwapWidget } from '@uniswap/widgets'
 import Row from 'components/Row'
 import { useCallback, useMemo, useState } from 'react'
+import { Field, SupportedChainId, SwapWidget } from 'tststst'
 
 import { DAI, nativeOnChain, USDC } from '../constants/tokens'
 import EventFeed, { Event, HANDLERS } from './EventFeed'

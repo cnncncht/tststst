@@ -63,7 +63,7 @@ module.exports = (webpackConfig) => {
     resolve: {
       ...resolve,
       alias: {
-        '@uniswap/widgets': path.resolve(__dirname, 'dist/'),
+        'tststst': path.resolve(__dirname, 'dist/'),
       },
     },
     module: {
