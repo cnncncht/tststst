@@ -7,7 +7,7 @@ import { Field, SupportedChainId, SwapWidget } from 'tststst'
 import { DAI, nativeOnChain, USDC } from '../constants/tokens'
 import EventFeed, { Event, HANDLERS } from './EventFeed'
 import useOption from './useOption'
-import useProvider, { INFURA_NETWORK_URLS } from './useProvider'
+import useProvider from './useProvider'
 
 function Fixture() {
   const [events, setEvents] = useState<Event[]>([])
@@ -64,7 +64,6 @@ function Fixture() {
           [Field.INPUT]: inputToken,
           [Field.OUTPUT]: outputToken,
         }}
-        jsonRpcUrlMap={INFURA_NETWORK_URLS}
         provider={connector}
         tokenList={tokens}
         {...eventHandlers}

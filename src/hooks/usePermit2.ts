@@ -1,7 +1,7 @@
 import { PERMIT2_ADDRESS } from '@uniswap/permit2-sdk'
 import { CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
-import ms from 'ms.macro'
+import { STANDARD_L1_BLOCK_TIME } from 'constants/chainInfo'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { ApprovalTransactionInfo } from '..'
@@ -11,7 +11,6 @@ import { useTokenAllowance, useUpdateTokenAllowance } from './useTokenAllowance'
 
 export enum PermitState {
   UNKNOWN,
-  APPROVAL_NEEDED,
   PERMIT_NEEDED,
   PERMITTED,
 }
@@ -19,67 +18,79 @@ export enum PermitState {
 export interface Permit {
   state: PermitState
   signature?: PermitSignature
-  callback?: () => Promise<ApprovalTransactionInfo | void>
+  callback?: (isPendingApproval: boolean) => Promise<ApprovalTransactionInfo | void>
 }
 
 export default function usePermit(amount?: CurrencyAmount<Token>, spender?: string): Permit {
   const { account } = useWeb3React()
   const tokenAllowance = useTokenAllowance(amount?.currency, account, PERMIT2_ADDRESS)
   const updateTokenAllowance = useUpdateTokenAllowance(amount, PERMIT2_ADDRESS)
+  const isAllowed = useMemo(
+    () => amount && (tokenAllowance?.greaterThan(amount) || tokenAllowance?.equalTo(amount)),
+    [amount, tokenAllowance]
+  )
 
-  const allowanceData = usePermitAllowance(amount?.currency, spender)
-  const [permitAllowance, setPermitAllowance] = useState(allowanceData?.amount)
-  useEffect(() => setPermitAllowance(allowanceData?.amount), [allowanceData?.amount])
+  const permitAllowance = usePermitAllowance(amount?.currency, spender)
+  const [permitAllowanceAmount, setPermitAllowanceAmount] = useState(permitAllowance?.amount)
+  useEffect(() => setPermitAllowanceAmount(permitAllowance?.amount), [permitAllowance?.amount])
+  const isPermitted = useMemo(
+    () => amount && permitAllowanceAmount?.gte(amount.quotient.toString()),
+    [amount, permitAllowanceAmount]
+  )
 
   const [signature, setSignature] = useState<PermitSignature>()
-  const updatePermitAllowance = useUpdatePermitAllowance(amount?.currency, spender, allowanceData?.nonce, setSignature)
+  const updatePermitAllowance = useUpdatePermitAllowance(
+    amount?.currency,
+    spender,
+    permitAllowance?.nonce,
+    setSignature
+  )
 
-  const updateTokenAndPermitAllowance = useCallback(async () => {
-    // Queue both transactions.
-    const info = updateTokenAllowance()
-    // Delay the permit allowance to ensure the approval is prompted for first;
-    // but do not wait until token allowance resolves, to avoid some wallets closing their modal in between prompts (eg MetaMask).
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    await updatePermitAllowance()
-    return info
-  }, [updatePermitAllowance, updateTokenAllowance])
+  const isSigned = useMemo(
+    () => amount && signature?.details.token === amount?.currency.address && signature?.spender === spender,
+    [amount, signature?.details.token, signature?.spender, spender]
+  )
 
   // Trigger a re-render if either tokenAllowance or signature expire.
   useInterval(
     () => {
-      const now = Date.now() / 1000 - 12 // ensure it can still go into this block (assuming 12s block time)
+      // Calculate now such that the signature will still be valid for the next block.
+      const now = (Date.now() - STANDARD_L1_BLOCK_TIME) / 1000
       if (signature && signature.sigDeadline < now) {
         setSignature(undefined)
       }
-      if (allowanceData && allowanceData.expiration < now) {
-        setPermitAllowance(undefined)
+      if (permitAllowance && permitAllowance.expiration < now) {
+        setPermitAllowanceAmount(undefined)
       }
     },
-    ms`12s`,
+    STANDARD_L1_BLOCK_TIME,
     true
+  )
+
+  const callback = useCallback(
+    async (isPendingApproval: boolean) => {
+      let info: ApprovalTransactionInfo | undefined
+      if (!isAllowed && !isPendingApproval) {
+        info = await updateTokenAllowance()
+      }
+      if (!isPermitted && !isSigned) {
+        await updatePermitAllowance()
+      }
+      return info
+    },
+    [isAllowed, isPermitted, isSigned, updatePermitAllowance, updateTokenAllowance]
   )
 
   return useMemo(() => {
     if (!amount || !tokenAllowance) {
       return { state: PermitState.UNKNOWN }
-    } else if (tokenAllowance.greaterThan(amount) || tokenAllowance.equalTo(amount)) {
-      if (permitAllowance?.gte(amount.quotient.toString())) {
+    } else if (isAllowed) {
+      if (isPermitted) {
         return { state: PermitState.PERMITTED }
-      } else if (signature?.details.token === amount.currency.address && signature?.spender === spender) {
+      } else if (isSigned) {
         return { state: PermitState.PERMITTED, signature }
-      } else {
-        return { state: PermitState.PERMIT_NEEDED, callback: updatePermitAllowance }
       }
-    } else {
-      return { state: PermitState.APPROVAL_NEEDED, callback: updateTokenAndPermitAllowance }
     }
-  }, [
-    amount,
-    permitAllowance,
-    signature,
-    spender,
-    tokenAllowance,
-    updatePermitAllowance,
-    updateTokenAndPermitAllowance,
-  ])
+    return { state: PermitState.PERMIT_NEEDED, callback }
+  }, [amount, callback, isAllowed, isPermitted, isSigned, signature, tokenAllowance])
 }

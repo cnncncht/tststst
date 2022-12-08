@@ -33,7 +33,7 @@ export default function SwapButton({
 }: {
   color: keyof Colors
   disabled: boolean
-  onSubmit: (submit?: () => Promise<ApprovalTransactionInfo | SwapTransactionInfo | void>) => Promise<void>
+  onSubmit: (submit: () => Promise<ApprovalTransactionInfo | SwapTransactionInfo | void>) => Promise<void>
 }) {
   const { account, chainId } = useWeb3React()
   const {
@@ -57,13 +57,13 @@ export default function SwapButton({
     deadline,
     feeOptions,
   })
-  const universalRouterCallback = useUniversalRouterSwapCallback(permit2 ? trade : undefined, {
+  const universalRouterSwapCallback = useUniversalRouterSwapCallback(permit2 ? trade : undefined, {
     slippageTolerance: slippage.allowed,
     deadline,
     permit: permit.signature,
     feeOptions,
   })
-  const swapCallback = permit2 ? universalRouterCallback : swapRouterCallback
+  const swapCallback = permit2 ? universalRouterSwapCallback : swapRouterCallback
 
   const [open, setOpen] = useState(false)
   // Close the review modal if there is no available trade.
