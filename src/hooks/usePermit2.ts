@@ -10,7 +10,8 @@ import { PermitSignature, usePermitAllowance, useUpdatePermitAllowance } from '.
 import { useTokenAllowance, useUpdateTokenAllowance } from './useTokenAllowance'
 
 export enum PermitState {
-  UNKNOWN,
+  INVALID,
+  LOADING,
   PERMIT_NEEDED,
   PERMITTED,
 }
@@ -82,8 +83,10 @@ export default function usePermit(amount?: CurrencyAmount<Token>, spender?: stri
   )
 
   return useMemo(() => {
-    if (!amount || !tokenAllowance) {
-      return { state: PermitState.UNKNOWN }
+    if (!amount) {
+      return { state: PermitState.INVALID }
+    } else if (!tokenAllowance || !permitAllowance) {
+      return { state: PermitState.LOADING }
     } else if (isAllowed) {
       if (isPermitted) {
         return { state: PermitState.PERMITTED }
@@ -92,5 +95,5 @@ export default function usePermit(amount?: CurrencyAmount<Token>, spender?: stri
       }
     }
     return { state: PermitState.PERMIT_NEEDED, callback }
-  }, [amount, callback, isAllowed, isPermitted, isSigned, signature, tokenAllowance])
+  }, [amount, callback, isAllowed, isPermitted, isSigned, permitAllowance, signature, tokenAllowance])
 }
