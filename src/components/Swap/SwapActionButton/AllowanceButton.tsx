@@ -3,23 +3,20 @@ import { PERMIT2_ADDRESS } from '@uniswap/permit2-sdk'
 import ActionButton from 'components/ActionButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { usePendingApproval } from 'hooks/transactions'
-import { Permit, PermitState } from 'hooks/usePermit2'
+import { AllowanceRequired } from 'hooks/usePermit2Allowance'
 import { Spinner } from 'icons'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { ApprovalTransactionInfo } from 'state/transactions'
 import { Colors } from 'theme'
 import { ExplorerDataType } from 'utils/getExplorerLink'
 
-interface PermitButtonProps extends Permit {
+interface AllowanceButtonProps extends AllowanceRequired {
   color: keyof Colors
-  onSubmit: (submit: () => Promise<ApprovalTransactionInfo | void>) => Promise<void>
 }
 /**
- * An approving PermitButton.
- * Should only be rendered if a valid trade exists that is not yet permitted.
+ * An approving AllowanceButton.
+ * Should only be rendered if a valid trade exists that is not yet allowed.
  */
-export default function PermitButton({ token, state, callback, color, onSubmit }: PermitButtonProps) {
-  const isApprovalLoading = state === PermitState.APPROVAL_LOADING
+export default function AllowanceButton({ token, isApprovalLoading, approveAndPermit, color }: AllowanceButtonProps) {
   const [isPending, setIsPending] = useState(false)
   const [isFailed, setIsFailed] = useState(false)
   const pendingApproval = usePendingApproval(token, PERMIT2_ADDRESS)
@@ -32,7 +29,7 @@ export default function PermitButton({ token, state, callback, color, onSubmit }
   const onClick = useCallback(async () => {
     setIsPending(true)
     try {
-      await onSubmit(async () => await callback?.())
+      await approveAndPermit?.()
       setIsFailed(false)
     } catch (e) {
       console.error(e)
@@ -40,7 +37,7 @@ export default function PermitButton({ token, state, callback, color, onSubmit }
     } finally {
       setIsPending(false)
     }
-  }, [callback, onSubmit])
+  }, [approveAndPermit])
 
   const action = useMemo(() => {
     if (isPending) {
@@ -67,11 +64,11 @@ export default function PermitButton({ token, state, callback, color, onSubmit }
     } else {
       return {
         tooltipContent: t`Permission is required for Uniswap to swap each token. This will expire after one month for your security.`,
-        message: `Approve use of ${token ?? 'token'}`,
+        message: t`Approve use of ${token?.symbol ?? 'token'}`,
         onClick,
       }
     }
-  }, [isApprovalLoading, isFailed, isPending, onClick, pendingApproval, token])
+  }, [isApprovalLoading, isFailed, isPending, onClick, pendingApproval, token?.symbol])
 
   return (
     <ActionButton color={color} disabled={!action?.onClick} action={action}>
