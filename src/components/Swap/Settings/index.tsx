@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Settings as SettingsIcon } from 'icons'
-import { useAtomValue, useResetAtom } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { useCallback, useState } from 'react'
 import { swapEventHandlersAtom } from 'state/swap'
 import { settingsAtom } from 'state/swap/settings'

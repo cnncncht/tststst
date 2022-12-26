@@ -1,6 +1,6 @@
 import { useSwapAmount } from 'hooks/swap'
 import { useAddTransactionInfo } from 'hooks/transactions'
-import { useUpdateAtom } from 'jotai/utils'
+import { useSetAtom } from 'jotai'
 import { useCallback } from 'react'
 import { displayTxHashAtom, Field } from 'state/swap'
 import { TransactionInfo, TransactionType } from 'state/transactions'
@@ -9,7 +9,7 @@ import { isAnimating } from 'utils/animations'
 /** Submits a transaction. */
 export default function useOnSubmit() {
   const addTransactionInfo = useAddTransactionInfo()
-  const setDisplayTxHash = useUpdateAtom(displayTxHashAtom)
+  const setDisplayTxHash = useSetAtom(displayTxHashAtom)
   const [, setInputAmount] = useSwapAmount(Field.INPUT)
 
   return useCallback(

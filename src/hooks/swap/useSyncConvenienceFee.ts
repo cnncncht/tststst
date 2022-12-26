@@ -1,6 +1,6 @@
 import { Percent } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
-import { useUpdateAtom } from 'jotai/utils'
+import { useSetAtom } from 'jotai'
 import { useEffect } from 'react'
 import { feeOptionsAtom } from 'state/swap'
 
@@ -11,7 +11,7 @@ export interface FeeOptions {
 
 export default function useSyncConvenienceFee({ convenienceFee, convenienceFeeRecipient }: FeeOptions) {
   const { chainId } = useWeb3React()
-  const updateFeeOptions = useUpdateAtom(feeOptionsAtom)
+  const updateFeeOptions = useSetAtom(feeOptionsAtom)
 
   useEffect(() => {
     if (convenienceFee && convenienceFeeRecipient) {

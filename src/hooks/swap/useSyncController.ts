@@ -1,4 +1,4 @@
-import { useUpdateAtom } from 'jotai/utils'
+import { useSetAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
 import { controlledAtom as swapAtom, Swap } from 'state/swap'
 import { controlledAtom as settingsAtom, Settings } from 'state/swap/settings'
@@ -21,10 +21,10 @@ export default function useSyncController({ value, settings }: SwapController): 
     }
   }, [settings, value])
 
-  const setSwap = useUpdateAtom(swapAtom)
+  const setSwap = useSetAtom(swapAtom)
   setSwap(() => value)
 
-  const setSettings = useUpdateAtom(settingsAtom)
+  const setSettings = useSetAtom(settingsAtom)
   setSettings(() => settings)
 }
 

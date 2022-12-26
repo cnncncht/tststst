@@ -1,7 +1,7 @@
 import { UNIVERSAL_ROUTER_ADDRESS } from '@uniswap/universal-router-sdk'
 import { useWeb3React } from '@web3-react/core'
 import { Atom, atom } from 'jotai'
-import { useAtomValue } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 
 // Flags are sticky settings - they cannot be changed without remounting the Widget.

@@ -1,6 +1,6 @@
 import { CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
 import useAutoSlippageTolerance, { DEFAULT_AUTO_SLIPPAGE } from 'hooks/useAutoSlippageTolerance'
-import { useAtomValue } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { InterfaceTrade } from 'state/routing/types'
 import { slippageAtom } from 'state/swap/settings'

@@ -1,7 +1,7 @@
 import { TransactionReceipt } from '@ethersproject/abstract-provider'
 import { Token } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
-import { useAtomValue, useUpdateAtom } from 'jotai/utils'
+import { useAtomValue, useSetAtom } from 'jotai'
 import ms from 'ms.macro'
 import { useCallback, useEffect, useRef } from 'react'
 import { Transaction, TransactionInfo, transactionsAtom, TransactionType } from 'state/transactions'
@@ -23,7 +23,7 @@ export function usePendingTransactions() {
 export function useAddTransactionInfo() {
   const { chainId } = useWeb3React()
   const blockNumber = useBlockNumber()
-  const updateTxs = useUpdateAtom(transactionsAtom)
+  const updateTxs = useSetAtom(transactionsAtom)
 
   return useCallback(
     (info: TransactionInfo) => {
@@ -77,7 +77,7 @@ export interface TransactionEventHandlers {
 
 export function TransactionsUpdater({ onTxSubmit, onTxSuccess, onTxFail }: TransactionEventHandlers) {
   const currentPendingTxs = usePendingTransactions()
-  const updateTxs = useUpdateAtom(transactionsAtom)
+  const updateTxs = useSetAtom(transactionsAtom)
   const onCheck = useCallback(
     ({ chainId, hash, blockNumber }) => {
       updateTxs((txs) => {

@@ -1,7 +1,7 @@
 import { TradeType } from '@uniswap/sdk-core'
 import { SupportedChainId } from 'constants/chains'
 import { DAI, UNI, USDC_MAINNET } from 'constants/tokens'
-import { useAtomValue } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
 import { controlledAtom, Field, stateAtom, Swap, swapAtom, swapEventHandlersAtom } from 'state/swap'
 import { renderHook } from 'test'
 

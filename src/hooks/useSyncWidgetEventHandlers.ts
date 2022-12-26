@@ -1,6 +1,6 @@
 import { OnError } from 'components/Error/ErrorBoundary'
 import { OnSwitchChain, onSwitchChainAtom } from 'hooks/useSwitchChain'
-import { useUpdateAtom } from 'jotai/utils'
+import { useSetAtom } from 'jotai'
 import { useEffect } from 'react'
 import { OnConnectWalletClick, onConnectWalletClickAtom } from 'state/wallet'
 export type { OnError } from 'components/Error/ErrorBoundary'
@@ -14,12 +14,12 @@ export interface WidgetEventHandlers {
 }
 
 export default function useSyncWidgetEventHandlers({ onConnectWalletClick, onSwitchChain }: WidgetEventHandlers): void {
-  const setOnConnectWalletClick = useUpdateAtom(onConnectWalletClickAtom)
+  const setOnConnectWalletClick = useSetAtom(onConnectWalletClickAtom)
   useEffect(() => {
     setOnConnectWalletClick(() => onConnectWalletClick)
   }, [onConnectWalletClick, setOnConnectWalletClick])
 
-  const setOnSwitchChain = useUpdateAtom(onSwitchChainAtom)
+  const setOnSwitchChain = useSetAtom(onSwitchChainAtom)
   useEffect(() => {
     setOnSwitchChain(() => onSwitchChain)
   }, [onSwitchChain, setOnSwitchChain])

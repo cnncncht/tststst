@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { useConditionalHandler } from 'hooks/useConditionalHandler'
 import { Wallet as WalletIcon } from 'icons'
-import { useAtomValue } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
 import { useCallback, useState } from 'react'
 import { onConnectWalletClickAtom } from 'state/wallet'
 import styled from 'styled-components/macro'

@@ -1,7 +1,7 @@
 import { useSwapCurrency, useSwapInfo } from 'hooks/swap'
 import useCurrencyColor from 'hooks/useCurrencyColor'
 import { atom } from 'jotai'
-import { useAtomValue } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
 import { Field } from 'state/swap'
 import styled from 'styled-components/macro'
 import { DynamicThemeProvider } from 'theme'

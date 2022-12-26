@@ -4,7 +4,7 @@ import { Connector } from '@web3-react/types'
 import { SupportedChainId } from 'constants/chains'
 import { nativeOnChain } from 'constants/tokens'
 import { useToken } from 'hooks/useCurrency'
-import { useUpdateAtom } from 'jotai/utils'
+import { useSetAtom } from 'jotai'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Field, Swap, swapAtom } from 'state/swap'
 
@@ -54,7 +54,7 @@ export default function useSyncTokenDefaults({
 }: TokenDefaults) {
   const lastChainId = useRef<number | undefined>(undefined)
   const lastConnector = useRef<Connector | undefined>(undefined)
-  const updateSwap = useUpdateAtom(swapAtom)
+  const updateSwap = useSetAtom(swapAtom)
   const { chainId, connector } = useWeb3React()
 
   const defaultOutputToken = useDefaultToken(defaultOutputTokenAddress, chainId, false)

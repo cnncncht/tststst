@@ -1,6 +1,6 @@
 import { Currency } from '@uniswap/sdk-core'
 import { useAtom } from 'jotai'
-import { useAtomValue, useUpdateAtom } from 'jotai/utils'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { useCallback, useMemo } from 'react'
 import { pickAtom } from 'state/atoms'
 import { Field, swapAtom, swapEventHandlersAtom } from 'state/swap'
@@ -18,7 +18,7 @@ function otherField(field: Field) {
 
 export function useSwitchSwapCurrencies() {
   const { onSwitchTokens } = useAtomValue(swapEventHandlersAtom)
-  const setSwap = useUpdateAtom(swapAtom)
+  const setSwap = useSetAtom(swapAtom)
   return useCallback(() => {
     setSwap((swap) => {
       onSwitchTokens?.()
@@ -72,7 +72,7 @@ export function useSwapAmount(field: Field): [string | undefined, (amount: strin
   const amount = isFieldIndependent ? value : undefined
 
   const { onAmountChange } = useAtomValue(swapEventHandlersAtom)
-  const setSwap = useUpdateAtom(swapAtom)
+  const setSwap = useSetAtom(swapAtom)
   const updateAmount = useCallback(
     (update: string, origin?: 'max') => {
       if (update === amount) return

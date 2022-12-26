@@ -5,7 +5,7 @@ import { ErrorCode } from 'constants/eip1193'
 import { useIsPendingApproval } from 'hooks/transactions'
 import { PermitState, SignatureData, usePermit } from 'hooks/usePermit'
 import useTransactionDeadline from 'hooks/useTransactionDeadline'
-import { useAtomValue } from 'jotai/utils'
+import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { swapEventHandlersAtom } from 'state/swap'
 
