@@ -3,7 +3,7 @@ import { FeeOptions } from '@uniswap/v3-sdk'
 import { SupportedChainId } from 'constants/chains'
 import { nativeOnChain } from 'constants/tokens'
 import { atom } from 'jotai'
-import { atomWithImmer } from 'jotai/immer'
+import { atomWithImmer } from 'jotai-immer'
 import { InterfaceTrade } from 'state/routing/types'
 
 import { Slippage } from './settings'

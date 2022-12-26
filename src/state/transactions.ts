@@ -1,6 +1,6 @@
 import { TransactionReceipt, TransactionResponse } from '@ethersproject/abstract-provider'
 import { Currency, CurrencyAmount, Percent, TradeType } from '@uniswap/sdk-core'
-import { atomWithImmer } from 'jotai/immer'
+import { atomWithImmer } from 'jotai-immer'
 import { InterfaceTrade } from 'state/routing/types'
 
 export enum TransactionType {

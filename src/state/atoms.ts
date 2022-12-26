@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Draft } from 'immer'
 import { atom, WritableAtom } from 'jotai'
-import { withImmer } from 'jotai/immer'
+import { withImmer } from 'jotai-immer'
 
 /**
  * Creates a derived atom whose value is the picked object property.

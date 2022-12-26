@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { atomWithImmer } from 'jotai/immer'
+import { atomWithImmer } from 'jotai-immer'
 import { useCallback } from 'react'
 
 import useBlockNumber from './useBlockNumber'
