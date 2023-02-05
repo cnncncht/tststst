@@ -6,7 +6,6 @@ import { useConditionalHandler } from 'hooks/useConditionalHandler'
 import { useCurrencyBalances } from 'hooks/useCurrencyBalance'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import useTokenList, { useIsTokenListLoaded, useQueryTokens } from 'hooks/useTokenList'
-import { Search } from 'icons'
 import { useAtomValue } from 'jotai/utils'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Field, swapEventHandlersAtom } from 'state/swap'
@@ -17,7 +16,6 @@ import Column from '../Column'
 import Dialog, { Header } from '../Dialog'
 import Row from '../Row'
 import Rule from '../Rule'
-import CommonBases from './CommonBases'
 import NoTokensAvailableOnNetwork from './NoTokensAvailableOnNetwork'
 import TokenButton from './TokenButton'
 import TokenOptions, { TokenOptionsHandle } from './TokenOptions'
@@ -92,19 +90,17 @@ export function TokenSelectDialog({ value, onSelect, onClose }: TokenSelectDialo
       <Column gap={0.75}>
         <Row pad={0.75} grow>
           <SearchInputContainer gap={0.75} justify="start" flex>
-            <Search color="secondary" />
             <ThemedText.Body1 flexGrow={1}>
               <StringInput
                 value={query}
                 onChange={setQuery}
-                placeholder={t`Search by token name or address`}
+                placeholder={t`Search`}
                 onKeyDown={options?.onKeyDown}
                 ref={input}
               />
             </ThemedText.Body1>
           </SearchInputContainer>
         </Row>
-        <CommonBases chainId={chainId} onSelect={onSelect} selected={value} />
         <Rule padded />
       </Column>
       {isLoaded ? (
