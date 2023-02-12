@@ -161,7 +161,7 @@ function CaptionRow() {
       }
       styledTitleWrapper={false}
       showBottomGradient={false}
-      open={open}
+      open={open || isAmountPopulated}
       onExpand={maybeToggleOpen}
       maxHeight={16}
     >

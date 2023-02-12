@@ -69,7 +69,7 @@ export function Body2(props: TextProps) {
   return (
     <TextWrapper
       className="body body-2"
-      fontSize={14}
+      fontSize={12}
       fontWeight={400}
       lineHeight={`${Body2LineHeightRem}rem`}
       {...props}
@@ -99,7 +99,7 @@ export function ButtonMedium(props: TextProps) {
 
 export function ButtonSmall(props: TextProps) {
   return (
-    <TextWrapper className="button button-small" fontSize={14} fontWeight={600} lineHeight="14px" noWrap {...props} />
+    <TextWrapper className="button button-small" fontSize={10} fontWeight={500} lineHeight="10px" noWrap {...props} />
   )
 }
 

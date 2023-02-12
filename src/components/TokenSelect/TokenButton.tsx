@@ -53,15 +53,15 @@ export default function TokenButton({ value, approved, disabled, onClick }: Toke
       <TokenButtonRow empty={!value} flex gap={0.4}>
         {value ? (
           <>
-            <TokenImg token={value} size={1.5} />
-            <ThemedText.ButtonLarge color={'currentColor'}>
+            <TokenImg token={value} size={1} />
+            <ThemedText.ButtonSmall color={'currentColor'}>
               <span>{value.symbol}</span>
-            </ThemedText.ButtonLarge>
+            </ThemedText.ButtonSmall>
           </>
         ) : (
-          <ThemedText.ButtonLarge color={'onAccent'}>
+          <ThemedText.ButtonSmall color={'onAccent'}>
             <Trans>Select</Trans>
-          </ThemedText.ButtonLarge>
+          </ThemedText.ButtonSmall>
         )}
         <ChevronDown strokeWidth={2} color={value ? 'primary' : 'onAccent'} />
       </TokenButtonRow>
