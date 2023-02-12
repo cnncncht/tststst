@@ -19,7 +19,7 @@ const StyledWidgetWrapper = styled.div<{ width: number | string }>`
 
   max-width: 600px;
   min-height: 300px;
-  min-width: 300px;
+  min-width: 250px;
   padding: ${ROOT_CONTAINER_PADDING}px;
   position: relative;
   user-select: none;

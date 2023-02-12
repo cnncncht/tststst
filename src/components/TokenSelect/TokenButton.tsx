@@ -60,7 +60,7 @@ export default function TokenButton({ value, approved, disabled, onClick }: Toke
           </>
         ) : (
           <ThemedText.ButtonLarge color={'onAccent'}>
-            <Trans>Select a token</Trans>
+            <Trans>Select</Trans>
           </ThemedText.ButtonLarge>
         )}
         <ChevronDown strokeWidth={2} color={value ? 'primary' : 'onAccent'} />

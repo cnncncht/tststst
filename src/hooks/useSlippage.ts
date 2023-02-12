@@ -39,7 +39,7 @@ export default function useSlippage(trade: {
   }, [autoSlippage, maxSlippage, slippage])
 }
 
-export const MAX_VALID_SLIPPAGE = new Percent(1, 2)
+export const MAX_VALID_SLIPPAGE = new Percent(1, 1)
 export const MIN_HIGH_SLIPPAGE = new Percent(1, 100)
 
 export function getSlippageWarning(slippage?: Percent): 'warning' | 'error' | undefined {

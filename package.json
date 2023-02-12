@@ -1,8 +1,6 @@
 {
-  "name": "@uniswap/widgets",
-  "description": "Uniswap Interface",
-  "homepage": "https://github.com/Uniswap/widgets#readme",
-  "repository": "https://github.com/Uniswap/widgets",
+  "name": "tststst",
+  "version": "2.0.0",
   "files": [
     "dist"
   ],
@@ -88,6 +86,7 @@
     "ethers": "^5.6.1",
     "immer": "^9.0.6",
     "jotai": "^1.3.7",
+    "jotai-immer": "^0.2.0",
     "jsbi": "^3.1.4",
     "make-plural": "^7.0.0",
     "ms.macro": "^2.0.0",
