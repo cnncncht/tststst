@@ -18,6 +18,7 @@ import { maxAmountSpend } from 'utils/maxAmountSpend'
 
 import Column from '../Column'
 import Row from '../Row'
+import { PriceImpactRow } from './PriceImpactRow'
 import TokenInput, { TokenInputHandle } from './TokenInput'
 
 const USDC = styled(Row)`
@@ -33,7 +34,7 @@ const InputColumn = styled(Column)<{ disableHover?: boolean; isWide: boolean }>`
   background-color: ${({ theme }) => theme.module};
   border-radius: ${({ theme }) => theme.borderRadius.small}em;
   margin-bottom: 0.25em;
-  padding: ${({ isWide }) => (isWide ? '0.1em 0' : '0.1em 0 1.5em')};
+  padding: ${({ isWide }) => (isWide ? '1em 0' : '1em 0 1.5em')};
   position: relative;
 
   &:before {
@@ -145,7 +146,7 @@ export function FieldWrapper({
       onClick={onClick}
       className={className}
     >
-      <Row pad={0.5 /* em */}>
+      <Row pad={1 /* em */}>
         <ThemedText.Subhead2 color={'secondary'}>{subheader}</ThemedText.Subhead2>
       </Row>
       <TokenInput
@@ -163,11 +164,7 @@ export function FieldWrapper({
           <Row>
             <USDC isLoading={isRouteLoading}>
               {usdc && `${formatCurrencyAmount(usdc, NumberType.FiatTokenQuantity)}`}
-              {impact && (
-                <ThemedText.Body2 userSelect={false} color={impact.warning ?? 'hint'}>
-                  ({impact.toString()})
-                </ThemedText.Body2>
-              )}
+              <PriceImpactRow impact={impact} />
             </USDC>
             {balance && (
               <Row gap={0.5}>
@@ -210,7 +207,7 @@ export default function Input() {
       field={Field.INPUT}
       maxAmount={maxAmount}
       approved={approvalState === SwapApprovalState.APPROVED}
-      subheader={t`From`}
+      subheader={t`You pay`}
     />
   )
 }

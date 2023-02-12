@@ -49,7 +49,7 @@ export function H4(props: TextProps) {
 
 export function Subhead1(props: TextProps) {
   return (
-    <TextWrapper className="subhead subhead-1" fontSize={14} fontWeight={500} lineHeight="24px" noWrap {...props} />
+    <TextWrapper className="subhead subhead-1" fontSize={16} fontWeight={500} lineHeight="24px" noWrap {...props} />
   )
 }
 

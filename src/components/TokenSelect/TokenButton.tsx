@@ -10,9 +10,9 @@ import TokenImg from '../TokenImg'
 
 const StyledTokenButton = styled(Button)<{ approved?: boolean }>`
   border-radius: ${({ theme }) => theme.borderRadius.medium}em;
-  font-size: 0.5rem;
-  min-height: 1em;
-  padding: 0.15em 0.2em 0.15em 0.2em;
+  min-height: 2em;
+  padding: 0.25em 0.5em 0.25em 0.25em;
+
   :enabled {
     transition: none;
   }
@@ -60,7 +60,7 @@ export default function TokenButton({ value, approved, disabled, onClick }: Toke
           </>
         ) : (
           <ThemedText.ButtonLarge color={'onAccent'}>
-            <Trans>Select</Trans>
+            <Trans>Select a token</Trans>
           </ThemedText.ButtonLarge>
         )}
         <ChevronDown strokeWidth={2} color={value ? 'primary' : 'onAccent'} />

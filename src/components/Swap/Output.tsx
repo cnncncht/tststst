@@ -14,8 +14,7 @@ export const colorAtom = atom<string | undefined>(undefined)
 
 const OutputWrapper = styled(FieldWrapper)<{ hasColor?: boolean | null; isWide: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.container};
-  padding: ${({ isWide }) => (isWide ? '0.1em 0' : '0.1em 0 1.5em')};
-  margin-bottom: 0.1em;
+  padding: ${({ isWide }) => (isWide ? '1em 0' : '1.5em 0 1em')};
 
   // Set transitions to reduce color flashes when switching color/token.
   // When color loads, transition the background so that it transitions from the empty or last state, but not _to_ the empty state.
@@ -42,7 +41,13 @@ export default function Output() {
 
   return (
     <DynamicThemeProvider color={color}>
-      <OutputWrapper isWide={isWideWidget} field={Field.OUTPUT} impact={impact} hasColor={hasColor} subheader={t`To`} />
+      <OutputWrapper
+        isWide={isWideWidget}
+        field={Field.OUTPUT}
+        impact={impact}
+        hasColor={hasColor}
+        subheader={t`You receive`}
+      />
     </DynamicThemeProvider>
   )
 }
